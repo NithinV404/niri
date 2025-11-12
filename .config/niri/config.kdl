@@ -43,7 +43,7 @@ binds {
     MOD+SHIFT+ESCAPE                     { show-hotkey-overlay; }
 
     // ─── Applications ───
-    MOD+RETURN                          hotkey-overlay-title="Open Terminal: ptyxis" { spawn "ptyxis"; }
+    MOD+RETURN                          hotkey-overlay-title="Open Terminal: ptyxis" { spawn-sh "ptyxis --new-window"; }
     MOD+SPACE                           hotkey-overlay-title="Open App Launcher: wofi" { spawn-sh "wofi"; }
     MOD+B                               hotkey-overlay-title="Open Browser: helium" { spawn-sh "helium-browser"; }
     MOD+ALT+L                           hotkey-overlay-title="Lock Screen: swaylock" { spawn-sh "swaylock"; }
@@ -152,6 +152,8 @@ binds {
     MOD+SHIFT+F                         { fullscreen-window; }
     MOD+W                               { toggle-column-tabbed-display; }
 
+    MOD+SHIFT+W                         { spawn-sh "~/.config/niri/scripts/change-wallpaper.sh"; }
+
     // ─── Screenshots ───
     CTRL+SHIFT+1                        { screenshot; }
     CTRL+SHIFT+2                        { screenshot-screen; }
@@ -173,17 +175,17 @@ binds {
 
     spawn-sh-at-startup "/usr/lib/polkit-kde-authentication-agent-1 &" // Polkit
     spawn-sh-at-startup "swww-daemon" // Wallpaper daemon
-    spawn-sh-at-startup "swww img /usr/share/wallpapers/cachyos-wallpapers/Skyscraper.png" // Set wallpaper
+    spawn-sh-at-startup "swww img ~/wallpapers/wallhaven-og97jp_3840x2160.png" // Set wallpaper
+    spawn-sh-at-startup "~/.config/niri/scripts/update-theme.sh" // Update theme
     spawn-sh-at-startup "waybar" // Launch waybar
 
-    prefer-no-csd // Disable program decorations
     screenshot-path null // Disable screenshot saving
 
 // ────────────── Layout Settings ──────────────
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 
     layout {
-        gaps 12 // Gap between windows
+        gaps 8 // Gap between windows
         center-focused-column "never" // Don’t auto-center focused column
 
         preset-column-widths {
@@ -204,8 +206,6 @@ binds {
             offset x=0 y=5
             color "#0007"
         }
-
-        struts {}
     }
 
 // ────────────── Animation Settings ──────────────
@@ -272,6 +272,8 @@ binds {
         XDG_SESSION_TYPE "wayland"
         XDG_CURRENT_DESKTOP "niri"
     }
+
+    prefer-no-csd
 
     hotkey-overlay {
         skip-at-startup

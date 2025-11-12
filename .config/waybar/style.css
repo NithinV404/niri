@@ -1,126 +1,109 @@
+@import "colors.css";
+
 * {
-    font-family: "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 13px;
+    min-height: 0;
 }
 
 window#waybar {
-    background-color: #0f1117;
-    font-size: 14px;
-    border-radius: 0px;
-    margin: 0px;
-    padding: 0;
+    background-color: transparent;
+    color: @on_surface;
+    transition: background-color 0.3s ease;
 }
 
-/* Left-most: Arch icon */
-#custom-appmenu {
-  font-size: 4;
-  background-image: url('/usr/share/icons/cachyos.svg');
-  background-color: #1e222a;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  padding: 0px 12px;
-    
+window#waybar > box {
+    background-color: @surface_container;
+    border-bottom: 1px solid @outline_variant;
+    border-radius: 16px;
+    box-shadow:
+        0 6px 16px alpha(@shadow, 0.25),
+        0 3px 8px alpha(@shadow, 0.15),
+        0 1px 3px alpha(@shadow, 0.1);
+    margin: 6px;
+    padding: 4px 0px;
+    min-height: 25px;
 }
 
-/* Right-most: Clock */
-#clock {
-    font-size: 14px;
-    background-color: #1e222a;
-    color: #c0c0c0;
-    border-radius: 0px;
-    padding: 0px 8px;
-}
-
-/* Active window title */
-#window {
-    font-size: 14px;
-    font-weight: 800;
-    color: #e0e0e0;
-    border-radius: 0px;
-    padding: 4px 12px;
-    background-color: #1e222a;
-}
-
-/* Workspace container */
-#niri-workspaces {
-    background: #1e222a;
-    font-weight: bold;
-    border-radius: 0px;
-    font-size: 8px;
-    color: #e0e0e0;
-}
-
-/* Individual workspace buttons */
-#niri-workspaces button {
-    border-radius: 0px;
-    font-size: 8px;
-}
-
-#workspaces button.active {
-    border-radius: 0px;
-    color: #0f1117;
-    background: #00ac89;
+#workspaces button {
+    padding: 0 6px;
+    background-color: transparent;
+    color: @on_surface_variant;
+    border-radius: 16px;
+    margin: 2px;
+    transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
-    border-radius: 0px;
-    background: #0d3531;
-    border-width: 0px;
+    background-color: alpha(@primary, 0.08);
+    color: @on_surface;
+    box-shadow: 0 2px 4px alpha(@shadow, 0.1);
 }
 
-/* Power/exit button */
-#custom-exit {
-    background-color: #00ac89;
-    font-size: 14px;
-    font-weight: 800;
-    color: #0f1117;
-    padding: 0px 6px;
-    margin: 2px 2px 2px 0;
+#workspaces button.active {
+    background-color: @primary;
+    color: @on_primary;
 }
 
-/* Tooltips */
-tooltip {
-    border-radius: 12px;
-    background-color: #0f1117;
-    color: #c0c0c0;
-    padding: 4px 8px;
+#window {
+    padding: 0 12px;
+    color: @on_surface;
+    font-weight: bold;
+    background-color: @surface_container_high;
+    border-radius: 16px;
+    margin: 4px;
 }
 
-/* Taskbar */
-#taskbar {
-    background-color: #1e222a;
-    margin: 0px;
-    border-radius: 0px;
-    font-weight: normal;
-}
-
-/* All system info modules */
-#backlight,
+#clock,
 #pulseaudio,
 #network,
-#bluetooth,
 #battery,
 #tray,
-#custom-updates,
-#custom-notification {
-    background-color: #1e222a;
-    font-size: 14px;
-    font-weight: 800;
-    color: #c0c0c0;
-    border-radius: 0px;
-    padding: 4px 10px;
+#custom-shortcuts {
+    padding: 0 12px;
+    margin: 4px 2px;
+    background-color: @surface_container_high;
+    border-radius: 16px;
+    color: @on_surface;
+    transition: background-color 0.2s ease;
 }
 
-/* Battery critical warning */
-#battery.critical:not(.charging) {
-    background-color: #e65100;
-    color: #ffffff;
-    animation: blink 0.5s linear infinite alternate;
+#custom-shortcuts {
+    font-size: 16px;
+}
+
+#custom-shortcuts:hover,
+#pulseaudio:hover,
+#network:hover,
+#battery:hover {
+    background-color: @surface_container_highest;
+    box-shadow: 0 2px 8px alpha(@primary, 0.2);
+}
+
+#battery.warning {
+    color: @tertiary;
+}
+
+#battery.critical {
+    color: @error;
+    animation: blink 1s linear infinite;
 }
 
 @keyframes blink {
     to {
-        background-color: #0f1117;
-        color: #ffffff;
+        opacity: 0.5;
     }
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @error_container;
+    color: @on_error_container;
+    border-radius: 8px;
 }

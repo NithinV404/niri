@@ -1,29 +1,69 @@
 {
     "layer": "top",
-    "margin-top": 0,
+    "position": "top",
+    "height": 32,
+    "margin-top": 6,
+    "margin-left": 6,
+    "margin-right": 6,
     "margin-bottom": 0,
-    "margin-left": 0,
-    "margin-right": 0,
-    "spacing": 0,
+    "spacing": 4,
+    "reload_style_on_change": true,
+    "modules-left": ["niri/workspaces", "custom/shortcuts"],
+    "modules-center": ["niri/window"],
+    "modules-right": ["pulseaudio", "network", "battery", "tray", "clock"],
 
-    "include": [
-        "~/.config/waybar/modules.json"
-    ],
+    "custom/shortcuts": {
+        "format": "{icon}",
+        "format-icons": {
+            "apps": "󰀻",
+            "net": "󰈀",
+            "power": "󰐥"
+        },
+        "exec": "echo 'apps net power'",
+        "on-click": "fuzzel --dmenu --prompt 'Select Applet:' --lines 3 <<< 'Launch Apps\nNetwork Settings\nPower Off'",
+        "tooltip": false
+    },
 
-    "modules-left": [
-        "custom/appmenu",
-        "wlr/taskbar",
-        "niri/window"
-    ],
+    "niri/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "sort-by-number": true
+    },
 
-    "modules-center": [
-        "niri/workspaces"
-    ],
+    "niri/window": {
+        "separate-outputs": true
+    },
 
-    "modules-right": [
-        "tray",
-        "pulseaudio",
-        "clock",
-        "custom/exit"
-    ]
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟",
+        "format-icons": ["󰕿", "󰖀", "󰕾"],
+        "on-click": "pavucontrol"
+    },
+
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%)",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰖪 ",
+        "on-click": "fuzzel --dmenu --prompt 'Network:' <<< 'WiFi Scan\nToggle VPN'"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""],
+        "on-click": "fuzzel --dmenu --prompt 'Power:' <<< 'Suspend\nShutdown'"
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%Y-%m-%d | %A}</big>"
+    },
+
+    "tray": {
+        "spacing": 10
+    }
 }

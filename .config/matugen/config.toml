@@ -1,0 +1,7 @@
+
+
+# Waybar-specific template section
+[templates.waybar]
+input_path = "/home/nithin/.config/matugen/templates/colors-template.css"  # Path to the template you copied
+output_path = "/home/nithin/.config/waybar/colors.css"  # Generated file imported by Waybar
+post_hook = "pkill -SIGUSR2 waybar"  # Reloads Waybar cleanly (SIGUSR2 preserves state; alternative: killall waybar)
