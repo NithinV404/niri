@@ -3,107 +3,245 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "Roboto", sans-serif;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
     font-size: 13px;
     min-height: 0;
+    -gtk-icon-theme: "Adwaita";
 }
 
 window#waybar {
     background-color: transparent;
     color: @on_surface;
-    transition: background-color 0.3s ease;
 }
 
 window#waybar > box {
     background-color: @surface_container;
-    border-bottom: 1px solid @outline_variant;
-    border-radius: 16px;
-    box-shadow:
-        0 6px 16px alpha(@shadow, 0.25),
-        0 3px 8px alpha(@shadow, 0.15),
-        0 1px 3px alpha(@shadow, 0.1);
-    margin: 6px;
-    padding: 4px 0px;
-    min-height: 25px;
+    border-radius: 12px;
+    margin: 4px;
+    padding: 2px 4px;
+    min-height: 20px;
+}
+
+/* ===== Workspaces - GNOME Style ===== */
+#workspaces {
+    margin: 0px 4px;
+    padding: 8px 6px;
+    background-color: @surface_container_high;
+    border-radius: 12px;
 }
 
 #workspaces button {
-    padding: 0 6px;
-    background-color: transparent;
-    color: @on_surface_variant;
-    border-radius: 16px;
-    margin: 2px;
-    transition: all 0.2s ease;
+    padding: 0 5px;
+    margin: 0 2px;
+    background-color: @surface_container_highest;
+    color: transparent;
+    border-radius: 6px;
+    transition: all 0.25s ease;
 }
 
 #workspaces button:hover {
-    background-color: alpha(@primary, 0.08);
-    color: @on_surface;
-    box-shadow: 0 2px 4px alpha(@shadow, 0.1);
+    background-color: @primary_container;
 }
 
-#workspaces button.active {
+#workspaces button.active,
+#workspaces button.focused {
     background-color: @primary;
-    color: @on_primary;
+    padding: 0 10px;
 }
 
+#workspaces button.urgent {
+    background-color: @error;
+    animation: urgent-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes urgent-pulse {
+    0% {
+        background-color: @error;
+    }
+    50% {
+        background-color: @error_container;
+    }
+    100% {
+        background-color: @error;
+    }
+}
+
+/* ===== Window Title - Expressive Style ===== */
 #window {
-    padding: 0 12px;
-    color: @on_surface;
-    font-weight: bold;
-    background-color: @surface_container_high;
-    border-radius: 16px;
-    margin: 4px;
+    padding: 2px 10px;
+    color: @primary;
+    font-weight: 600;
+    background-color: @surface_container_highest;
+    border-radius: 12px;
+    margin: 2px 4px;
 }
 
+#window.empty {
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    min-height: 0;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+#window:hover {
+    background-color: @primary_container;
+    color: @on_primary_container;
+}
+
+/* ===== Module Common Styles - Expressive ===== */
 #clock,
 #pulseaudio,
 #network,
 #battery,
 #tray,
 #custom-shortcuts {
-    padding: 0 12px;
-    margin: 4px 2px;
-    background-color: @surface_container_high;
-    border-radius: 16px;
+    padding: 2px 10px;
+    margin: 2px;
+    background-color: @surface_container_highest;
+    border-radius: 12px;
     color: @on_surface;
-    transition: background-color 0.2s ease;
+    font-weight: 500;
+    min-height: 24px;
 }
 
 #custom-shortcuts {
-    font-size: 16px;
+    font-size: 14px;
+    padding: 2px 8px;
+    background-color: @primary_container;
+    color: @on_primary_container;
 }
 
-#custom-shortcuts:hover,
+#custom-shortcuts:hover {
+    background-color: @primary;
+    color: @on_primary;
+}
+
 #pulseaudio:hover,
 #network:hover,
-#battery:hover {
-    background-color: @surface_container_highest;
-    box-shadow: 0 2px 8px alpha(@primary, 0.2);
+#battery:hover,
+#clock:hover {
+    background-color: @primary_container;
+    color: @on_primary_container;
 }
 
+/* ===== Clock - Expressive Style ===== */
+#clock {
+    font-weight: 600;
+    background-color: @tertiary_container;
+    color: @on_tertiary_container;
+}
+
+#clock:hover {
+    background-color: @tertiary;
+    color: @on_tertiary;
+}
+
+/* ===== Battery States - Expressive ===== */
 #battery.warning {
-    color: @tertiary;
+    background-color: @tertiary_container;
+    color: @on_tertiary_container;
+    animation: warning-glow 2s ease-in-out infinite;
 }
 
 #battery.critical {
-    color: @error;
-    animation: blink 1s linear infinite;
+    background-color: @error;
+    color: @on_error;
+    font-weight: 700;
+    animation: critical-blink 1s ease-in-out infinite;
 }
 
-@keyframes blink {
-    to {
-        opacity: 0.5;
+@keyframes warning-glow {
+    0% {
+        opacity: 1;
     }
+    50% {
+        opacity: 0.85;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes critical-blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* ===== Audio States ===== */
+#pulseaudio.muted {
+    background-color: @error_container;
+    color: @on_error_container;
+}
+
+/* ===== Network States ===== */
+#network.disconnected {
+    background-color: @error_container;
+    color: @on_error_container;
+}
+
+/* ===== System Tray - Expressive ===== */
+#tray {
+    padding: 2px 6px;
 }
 
 #tray > .passive {
     -gtk-icon-effect: dim;
 }
 
+#tray > .passive:hover {
+    -gtk-icon-effect: none;
+}
+
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: @error_container;
-    color: @on_error_container;
+    background-color: @error;
+    color: @on_error;
     border-radius: 8px;
+    padding: 2px;
+    animation: attention-pulse 1.2s ease-in-out infinite;
+}
+
+#tray > .active {
+    background-color: @primary_container;
+    border-radius: 8px;
+    padding: 2px;
+}
+
+@keyframes attention-pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* ===== Tooltip Enhancement ===== */
+tooltip {
+    background-color: @surface_container_highest;
+    color: @on_surface;
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+tooltip label {
+    color: @on_surface;
+    font-weight: 500;
+}
+
+tooltip box {
+    background-color: transparent;
 }
